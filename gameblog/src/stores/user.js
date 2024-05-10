@@ -29,6 +29,44 @@ export const useUserStore=defineStore('user',{
             this.auth=true;
         },
        
+        async getUserProfile(uid){
+            try{
+                const userRef = await getDoc(doc(DB,'users',uid));
+                if(!userRef.exists()){
+                    throw new Error('Could not find user !!')
+                }
+                return userRef.data();
+            } catch(error){
+                throw new Error(error)
+            }
+        },
+        async signIn(formData){
+            try {
+                this.loading = true;
+
+                //sign in user
+                const response =  await signInWithEmailAndPassword(
+                    AUTH,
+                    formData.email,
+                    formData.password
+                );
+
+                //get user data
+                const userData = await this.getUserProfile(response.user.uid)
+
+                 // update local state
+                 this.setUser(userData);
+
+                 // redirect user
+                router.push({name:'dashboard'})
+                
+            } catch(error){
+                throw new Error(errorCode(error.code))
+            } finally {
+                this.loading = false;
+            }
+        },
+       
         async register(formData){
             try{    
                 this.loading=true;

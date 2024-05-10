@@ -84,6 +84,10 @@
     import * as yup from 'yup';
     import { ref } from 'vue';
 
+    //toasts
+    import { useToast } from 'vue-toast-notification';
+    const $toast=useToast();
+
     //Authstore
     import { useUserStore } from '@/stores/user';
     const userStore=useUserStore();
@@ -103,9 +107,21 @@
             //register
             userStore.register(values)
         }else{
-            //sign in
+            userStore.signIn(values)
         }
         //userStore.register(values)
     }
+
+    //subscribe to error
+    userStore.$onAction(({name,after,onError})=>{
+        if(name === 'register' || name === 'signIn'){
+            after(()=>{
+                $toast.success('Welcome !!')
+            })
+            onError((error)=>{
+                $toast.error(error.message)
+            })
+        }
+    })
 
 </script>
