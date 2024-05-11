@@ -22,12 +22,22 @@ const vuetify = createVuetify({
     directives,
 })
 
+//firebase
+import { AUTH } from './utils/firebase';
+import { onAuthStateChanged } from 'firebase/auth'
 
-const app = createApp(App)
 
-app.use(createPinia())
-app.use(router)
-app.use(vuetify)
-app.use(ToastPlugin)
+let app;
 
-app.mount('#app')
+onAuthStateChanged(AUTH,()=>{
+    if(!app){
+        app = createApp(App)
+
+        app.use(createPinia())
+        app.use(router)
+        app.use(vuetify)
+        app.use(ToastPlugin)
+
+        app.mount('#app')
+    }
+})
