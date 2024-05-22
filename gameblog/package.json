@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tiptap/extension-text-align": "^2.4.0",
+    "@tiptap/extension-underline": "^2.4.0",
     "@tiptap/pm": "^2.3.2",
     "@tiptap/starter-kit": "^2.3.2",
     "@tiptap/vue-3": "^2.3.2",
@@ -16,8 +18,10 @@
     "pinia": "^2.1.7",
     "vee-validate": "^4.12.4",
     "vue": "^3.4.21",
+    "vue-masonry": "^0.16.0",
     "vue-router": "^4.3.0",
     "vue-toast-notification": "^3.1.2",
+    "vue3-carousel": "^0.3.3",
     "vuetify": "^3.4.10",
     "yup": "^1.3.3"
   },

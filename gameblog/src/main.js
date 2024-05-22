@@ -6,6 +6,8 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
+//masonry
+import {VueMasonryPlugin} from 'vue-masonry';
 
 import ToastPlugin from 'vue-toast-notification'
 import 'vue-toast-notification/dist/theme-bootstrap.css'
@@ -37,7 +39,7 @@ onAuthStateChanged(AUTH,()=>{
         app.use(router)
         app.use(vuetify)
         app.use(ToastPlugin)
-
+        app.use(VueMasonryPlugin)
         app.mount('#app')
     }
 })
