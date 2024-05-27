@@ -1,9 +1,14 @@
 import { defineStore } from "pinia";
 import router from '@/router';
+import errorCodes from "@/utils/fbcodes";
 
 import { AUTH, DB } from "@/utils/firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
 import {getDoc, doc, setDoc, updateDoc} from 'firebase/firestore';
+
+//toasts
+import { useToast } from "vue-toast-notification";
+const $toast=useToast();
 
 
 const DEFAULT_USER={
@@ -23,6 +28,9 @@ export const useUserStore=defineStore('user',{
     getters:{
         getUserData(state){
             return state.user;
+        },
+        getUserId(state){
+            return state.user.uid
         }
     },
     actions:{
@@ -30,7 +38,20 @@ export const useUserStore=defineStore('user',{
             this.user={...this.user, ...user};
             this.auth=true;
         },
-        
+        async updateProfile(formData){
+            try{
+                const userRef=doc(DB,'users',this.getUserId);
+                await updateDoc(userRef,{
+                    ...formData
+                });
+
+                this.setUser(formData);
+                $toast.success('Updated!')
+                return true;    
+            }catch(error){
+                $toast.error(error.message);
+            }
+        },
         async signOut(){
             await signOut(AUTH);
             this.user = DEFAULT_USER;
@@ -104,6 +125,8 @@ export const useUserStore=defineStore('user',{
                 const newUser = {
                     uid: response.user.uid,
                     email:response.user.email,
+                    firstname:formData.firstname,
+                    lastname:formData.lastname,
                     isAdmin: false
                 }
                 await setDoc(doc(DB,'users',response.user.uid),newUser);
@@ -113,7 +136,7 @@ export const useUserStore=defineStore('user',{
                 //redirect user
                 router.push({name:'dashboard'})
             }catch(error){
-                throw new Error(errorCode(error.code));
+                throw new Error(errorCodes(error.code));
             }finally{
                 this.loading=false;
             }
