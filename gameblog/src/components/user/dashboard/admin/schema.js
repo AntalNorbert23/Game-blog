@@ -10,11 +10,11 @@ const ArticleSchema={
              .max(70, 'Make the title shorter'),
     excerpt:yup.string()
                .required('The excerpt is required')
-               .min(100,'Make the title bigger')
-               .max(400, 'Make the title shorter'),
+               .min(100,'Make the excerpt bigger')
+               .max(400, 'Make the excerpt shorter'),
     editor:yup.string()
               .required('The editor is required')
-              .min(50,'Make the title bigger'),
+              .min(50,'Make the editor bigger'),
     rating:yup.string()
               .required('The rating is required')
               .notOneOf(['Select a rating'],'You need to select a rating'),

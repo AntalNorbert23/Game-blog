@@ -23,7 +23,7 @@ const router = createRouter({
     {path: '/signin', name: 'signin', component: Signin,beforeEnter:isLoggedIn},
     {path: '/user/dashboard', component: Dashboard, beforeEnter:isAuth, children:[
       {path:'',component:DashboardMain, name:'dashboard' },
-      {path:'profile',component:DashboardMain, name:'user_profile' },
+      {path:'profile',component:UserProfile, name:'user_profile' },
       {path:'articles',component:AdminArticles, name:'admin_articles' },
       {path:'articles/add',component:AdminAddArticle, name:'admin_add' },
       {path:'articles/edit:id',component:AdminEditArticle, name:'admin_edit' },
