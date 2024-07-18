@@ -29,7 +29,7 @@
                     <td>{{ article.owner.firstname }} {{ article.owner.lastname }}</td>
                     <td>{{ article.rating }}</td>
                     <td>{{ article.timestamp.toDate().toDateString() }}</td>
-                    <td>
+                    <td class="text-center">
                         <v-btn
                             variant="outlined"
                             color="red"
@@ -39,7 +39,7 @@
                             Remove
                         </v-btn>
                     </td>
-                    <td>
+                    <td class="text-center">
                         <v-btn
                             variant="outlined"
                             color="yellow"
