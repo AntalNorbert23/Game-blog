@@ -12,6 +12,44 @@
         <Form @submit="onSubmit" :validation-schema="formSchema" v-show="!userStore.loading">
             <h1 v-text="!type ? 'Sign in' : 'Register'" ></h1>
 
+             <!-- First Name -->
+             <div class="form-group" v-if="type">
+                <Field 
+                    name="firstname" 
+                    v-slot="{ field, errors, errorMessage }"
+                >
+                    <input 
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter your first name"
+                        v-bind="field"
+                        :class="{ 'is-invalid': errors.length !== 0 }"
+                    />
+                    <div class="input_alert" v-if="errors.length !== 0">
+                        {{ errorMessage }}
+                    </div>
+                </Field>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group" v-if="type">
+                <Field 
+                    name="lastname" 
+                    v-slot="{ field, errors, errorMessage }"
+                >
+                    <input 
+                        type="text"
+                        class="form-control"
+                        placeholder="Enter your last name"
+                        v-bind="field"
+                        :class="{ 'is-invalid': errors.length !== 0 }"
+                    />
+                    <div class="input_alert" v-if="errors.length !== 0">
+                        {{ errorMessage }}
+                    </div>
+                </Field>
+            </div>
+
         <!-- E-mail -->
 
             <div class="form-group">
@@ -99,7 +137,11 @@
                  .required("The email is required")
                  .email("Not a valid email"),
         password:yup.string()
-                    .required('The password is required')  
+                    .required('The password is required'),
+        firstname: yup.string()
+                    .required('The first name is required'),
+        lastname: yup.string()
+                    .required('The last name is required')
     })
 
     function onSubmit(values,{ resetForm }){
